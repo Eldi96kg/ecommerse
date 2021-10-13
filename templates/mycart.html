@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% block title %} My cart{% endblock %}
+{% block content %}
+<div class="container">
+  <div class="row">
+    <div class="col-md-8">
+      <h4> Продукты в моей корзинке:</h4>
+      <hr>
+      <table class="table">
+        <thead>
+<tr>
+  <th>SN</th>
+  <th>Продукт</th>
+  <th>Стоимость</th>
+  <th>Кол-во</th>
+  <th>Сумма</th>
+  <th>Действие</th>
+
+</tr>
+        </thead>
+        <tbody>
+{% for cp in cart.cartproduct_set.all %}
+<tr>
+    <td>{{forloop.counter}}</td>
+    <td>{{cp.product.title}}</td>
+    <td>{{cp.rate}}</td>
+    <td>{{cp.quantity}}</td>
+    <td>{{cp.subtotal}}</td>
+    <td><a href="{% url 'ecomapp:managecart' cp.id %}?action=inc" class="btn btn-primary"> + </a>
+        <a href="{% url 'ecomapp:managecart' cp.id %}?action=dcr" class="btn btn-warning"> - </a>
+        <a href="{% url 'ecomapp:managecart' cp.id %}?action=rmv" class="btn btn-danger"> x </a>
+    </td>
+</tr>
+        {%endfor%}
+<tr>
+    <th colspan="4" class="text-end">Total</th>
+    <th>{{cart.total}}сом</th>
+</tr>{% if cart.cartproduct_set.all %}
+        <tr>
+            <th>
+                <a class="btn btn-info" href="{% url 'ecomapp:checkout' %}">Оформить заказ</a>
+            </th>
+        </tr>
+        {% endif %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

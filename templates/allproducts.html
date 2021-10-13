@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block title %} All products {% endblock %}
+{% block content %}
+<div class="container">
+
+  <h3>Вся продукция:</h3>
+  <hr>
+  {% for cat in allcategories %}
+  <h4>{{cat.title}}</h4>
+    <hr>
+  <div class="row">
+{%for p in cat.product_set.all%}
+ <div class="col-md-3">
+     <div class="m-4">
+    <h4><a style="text-decoration:none;" href="{% url 'ecomapp:productdetail' p.slug %}">{{p.title}}</a></h4>
+        {% if p.image %}
+            <p><img src="{{p.image.url}}" width="200" height="160"></p>
+        {% else %}
+           <p>no image for it</p>
+        {% endif %}
+     <p class="mt-3"> Цена: <strike>{{p.marked_price}}</strike>сом {{p.selling_price}}сом</p>
+     <a href="{% url 'ecomapp:addtocart' p.id %}" class="btn btn-primary">В карзину</a>
+     </div>
+</div>
+
+{%endfor%}
+  </div>
+  {%endfor%}
+</div>
+{% endblock %}

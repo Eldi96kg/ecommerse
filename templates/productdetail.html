@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block title %} {{product.title}} {% endblock %}
+{% block content %}
+
+<div class="container">
+  <h3>Product: {{product.title}}</h3>
+    <hr>
+<div class="row">
+  <div class="col-md-6">
+    <img src="{{product.image.url}}" class="img-fluid"  alt="">
+  </div>
+  <div class="col-md-6">
+
+    <h4>{{product.title}}(Просмотрено {{product.view_count}} раз )</h4>
+    <h5>Категория: {{product.category}}</h5>
+    <h5>Цена: <strike>{{product.marked_price}}сом</strike> {{product.selling_price}}сом</h5>
+      <a href="{% url 'ecomapp:addtocart' product.id %}" class="btn btn-info">В карзину</a>
+    <hr>
+    <p class="text-info">Гарантия: {{product.warranty}}</p>
+    <p class="text-info">Return_policy: {{product.return_policy}}</p>
+
+    <p>{{product.description}}</p>
+  </div>
+
+</div>
+</div>
+
+{%endblock%}
